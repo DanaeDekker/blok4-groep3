@@ -1,0 +1,76 @@
+* {
+  box-sizing: border-box;
+}
+
+form {
+  font-size: 17px;
+}
+
+label {
+  display: block;
+}
+
+/* Create two unequal columns that floats next to each other */
+.column {
+  float: left;
+  padding: 10px;
+}
+
+.left {
+  width: 12%;
+  height: 645px;
+  background-color: #bbbbbb;
+}
+
+.right {
+  width: 88%;
+  height: 645px;
+  padding-left: 20px;
+}
+
+table {
+  border: 1px solid black;
+  table-layout: fixed;
+  width: 100%;
+}
+
+th {
+  height: 30px;
+  border: 1px solid black;
+}
+
+td {
+  height: 50px;
+  border: 1px solid black;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #bbbbbb;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: darkgrey;
+}
+
+.active {
+  background-color: dimgrey;
+}
+
+
+
