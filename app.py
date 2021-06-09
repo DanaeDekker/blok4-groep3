@@ -5,6 +5,7 @@ import re
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def web_home():
     """De homepagina van de website
@@ -13,6 +14,7 @@ def web_home():
     """
     # Returnen van HTML pagina
     return render_template("website_home.html")
+
 
 @app.route('/database')
 def database():
@@ -34,8 +36,9 @@ def database():
         cursor = mydb.cursor()
         # Dingen invoeren en knopje aan de database linken
         invoer = request.args.get("invoer", "")
-        cursor.execute("select * from blast_resultaten where description like '%" + invoer + "%'")
-
+        cursor.execute(
+            "select * from blast_resultaten"
+            " where description like '%" + invoer + "%'")
 
         # Alle resultaten eruit halen
         resultaat = cursor.fetchall()
@@ -45,7 +48,7 @@ def database():
 
         for i in resultaat:
             print(i[2])
-            scientific_name = re.findall("\[[^\]]*\]",i[2])
+            scientific_name = re.findall("\[[^\]]*\]", i[2])
             print(scientific_name)
             if scientific_name != []:
                 sc_name = scientific_name[0]
@@ -55,7 +58,8 @@ def database():
                 sc_lijst.append(sc)
             # Returnen HTML pagina en resultaat
         return render_template("website_project.html",
-                               len=len(resultaat), invoer=resultaat, sclijst=sc_lijst)
+                               len=len(resultaat), invoer=resultaat,
+                               sclijst=sc_lijst)
     except SyntaxError:
         print("Er klopt iets niet in de code")
     except TypeError:
@@ -67,7 +71,6 @@ def database():
     except jinja2.exceptions.TemplateNotFound:
         print("Er klopt iets niet bij het aanroepen van de"
               " HTML template")
-
 
 
 @app.route('/pie')
@@ -79,17 +82,19 @@ def web_box():
     """
     try:
         # Connectie met de database
-        mydb = mysql.connector.connect(host="mysql.dehoogjes.nl",
-                                    user="dehoogjesnl",
-                                    password="Maritdh@2000",
-                                    auth_plugin='mysql_native_password',
-                                    database="dehoogjesnl")
+        mydb = mysql.connector.connect(
+            host="mysql.dehoogjes.nl",
+            user="dehoogjesnl",
+            password="Maritdh@2000",
+            auth_plugin='mysql_native_password',
+            database="dehoogjesnl")
         cursor = mydb.cursor()
         # Dingen invoeren aan de database linken
         invoer = request.args.get("invoer", "")
         cursor.execute(
             "select scientific_name, count(*) from organisme"
-            " group by scientific_name order by count(*) desc limit 10;")
+            " group by scientific_name"
+            " order by count(*) desc limit 10;")
         # Alle resultaten eruit halen
         resultaat = cursor.fetchall()
         # Cursor en database closen
@@ -97,7 +102,6 @@ def web_box():
         mydb.close()
         # Returnen HTML pagina en resultaat
         return render_template("website_plot.html", invoer=resultaat)
-    
     except SyntaxError:
         print("Er klopt iets niet in de code")
     except TypeError:
@@ -109,9 +113,6 @@ def web_box():
     except jinja2.exceptions.TemplateNotFound:
         print("Er klopt iets niet bij het aanroepen van de"
               " HTML template")
-
-
-
 
 
 if __name__ == '__main__':
