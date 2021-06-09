@@ -97,7 +97,6 @@ def web_box():
         mydb.close()
         # Returnen HTML pagina en resultaat
         return render_template("website_plot.html", invoer=resultaat)
-
     except SyntaxError:
         print("Er klopt iets niet in de code")
     except TypeError:
