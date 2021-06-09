@@ -20,7 +20,7 @@ jobs:
     - name: Set up Python version
       uses: actions/setup-python@v1
       with:
-        python-version: '3.7'
+        python-version: '3.8'
 
     - name: Create and start virtual environment
       run: |
@@ -59,4 +59,4 @@ jobs:
         with:
           app-name: 'BioInf1-3'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_05f78c8ae9904f1a973dfc2e314382a9 }}
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_56cb9ee03a0148e58e7154a40958de9c }}
