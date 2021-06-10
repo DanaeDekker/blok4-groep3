@@ -13,7 +13,13 @@ def web_home():
     :return: HTML pagina met een overzicht van de website
     """
     # Returnen van HTML pagina
-    return render_template("website_home.html")
+    try:
+        return render_template("website_home.html")
+    except NameError:
+        print("Kan variabele niet vinden")
+    except jinja2.exceptions.TemplateNotFound:
+        print("Er klopt iets niet bij het aanroepen van de"
+              " HTML template")
 
 
 @app.route('/database')
@@ -76,35 +82,10 @@ def web_box():
     de database
     """
     try:
-        # Connectie met de database
-        mydb = mysql.connector.connect(
-            host="mysql.dehoogjes.nl",
-            user="dehoogjesnl",
-            password="Maritdh@2000",
-            auth_plugin='mysql_native_password',
-            database="dehoogjesnl")
-        cursor = mydb.cursor()
-        # Dingen invoeren aan de database linken
-        invoer = request.args.get("invoer", "")
-        cursor.execute(
-            "select scientific_name, count(*) from organisme"
-            " group by scientific_name order by count(*)"
-            " desc limit 10;")
-        # Alle resultaten eruit halen
-        resultaat = cursor.fetchall()
-        # Cursor en database closen
-        cursor.close()
-        mydb.close()
         # Returnen HTML pagina en resultaat
-        return render_template("website_plot.html", invoer=resultaat)
-    except SyntaxError:
-        print("Er klopt iets niet in de code")
-    except TypeError:
-        print("Object type klopt niet")
+        return render_template("website_plot.html")
     except NameError:
         print("Kan variabele niet vinden")
-    except mysql.connector.errors.ProgrammingError:
-        print("Dit bestaat niet in de database")
     except jinja2.exceptions.TemplateNotFound:
         print("Er klopt iets niet bij het aanroepen van de"
               " HTML template")
